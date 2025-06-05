@@ -1,2 +1,35 @@
-# ai-human-engineering-collaboration-case-studies
-This repo contains 10 real-world case studies showcasing AI-human collaboration in software engineering. Each entry highlights a specific obstacle, root cause analysis, key lessons, and how LLMs and engineers worked together to debug, architect, and deploy secure, scalable AI infrastructure
+# AI–Human Engineering Collaboration Case Studies
+
+This repository contains 10 real-world case studies showcasing collaborative problem-solving between a human engineer and an AI assistant (LLM). Each entry documents a real software development challenge, including:
+
+- Defined obstacle
+- Root cause analysis
+- Lessons learned
+- LLM–engineer interaction dynamics
+
+## Purpose
+
+This repo is designed for:
+  - Engineers adopting LLMs as hands-on copilots.
+  - Teams navigating DevOps, AI infrastructure, or secure deployment
+  - Anyone documenting collaborative troubleshooting patterns
+
+## Structure
+
+Case studies are stored in standalone Markdown files:
+
+1. case_study_01_ssm_registration.md
+2. case_study_02_.md
+3. case_study_03_.md
+4. case_study_04_.md
+5. case_study_05_.md
+6. case_study_06_.md
+7. case_study_07_.md
+8. case_study_08_.md
+9. case_study_09_.md
+10. case_study_10_.md
+
+
+## License
+
+MIT
