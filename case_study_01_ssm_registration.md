@@ -5,6 +5,11 @@ This case study documents the process of troubleshooting a Systems Manager (SSM)
 
 ---
 
+**Author Note:**  
+This case is less about a rare technical edge case and more about how large language models require proactive context redirection. The LLM in this collaboration initially misprioritized the root cause not due to a lack of intelligence, but due to a framing bias. Once I introduced the right AWS documentation and reframed the constraints, the model pivoted effectively. This study highlights the importance of human intervention in guiding LLMs to the right diagnostic depth.
+
+---
+
 ## Problem Statement
 
 My EC2 instance, `bedrock-ec2`, failed to register as a managed node in AWS Systems Manager. This blocked automation and secure command execution — a critical part of my architecture for secure, private Amazon Bedrock inference.
