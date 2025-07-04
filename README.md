@@ -11,7 +11,7 @@ This repository contains 10 real-world case studies showcasing collaborative pro
 
 This repo is designed for:
   - Engineers adopting LLMs as hands-on copilots.
-  - Teams navigating DevOps, AI infrastructure, or secure deployment
+  - Teams navigating Software Development, AI infrastructure, DevOps.  
   - Anyone documenting collaborative troubleshooting patterns
 
 ## Structure
