@@ -54,6 +54,7 @@ aws ssm send-command \
   --targets "Key=tag:Name,Values=bedrock-ec2" \
   --parameters 'commands=["sudo systemctl restart amazon-ssm-agent"]' \
   --region us-east-1
+```
 
 **The command returned a valid CommandId, but when querying invocation details:**
 
@@ -62,6 +63,7 @@ aws ssm list-command-invocations \
   --command-id 19df72ff-436f-4385-b8a7-52a35c5b2bde \
   --details \
   --region us-east-1
+```
 
 
 **Returned Response:**
@@ -70,7 +72,7 @@ aws ssm list-command-invocations \
 {
   "CommandInvocations": []
 }
-
+```
 
 
 **LLM Interpretation (Incorrect Diagnostic):**
@@ -78,8 +80,12 @@ aws ssm list-command-invocations \
 
 The model proceeded to generate a plausible-sounding but incorrect conclusion as quoted below:
 
+**User Prompt:**
+*Uploads image of json response*
 
-".... Meaning:
+**LLM Response:**
+
+.... Meaning:
 	•	The command was successfully created
 	•	But no instance ever picked it up
 	•	This confirms: your EC2 instance is still not registered as a managed SSM node
@@ -99,7 +105,7 @@ The SSM agent on your instance never successfully registered with Systems Manage
 This could be due to:
 	•	A corrupted or unresponsive SSM agent
 	•	OS or AMI-level config drift
-	•	Timing issues during role attachment + boot"
+	•	Timing issues during role attachment + boot
 
 
 ---
@@ -134,10 +140,10 @@ In this case, I strategically reset the diagnostic trajectory by requesting the 
 
 ## Rewind Prompt
 
+**User Prompt:**
 "ec2-bedrock [my instance] still isn't showing up in AWS SSM Fleet manager. Review the chat, review what factors we've confirmed are in working order and compare that to every possible factor preventing the instance's registration, and I will verify each factor in the checklist one at a time"
 
-**GPT-4o Suggested Diagnostic Checklist:**
-
+**LLM Response:**
 "That's a great idea! Let's approach this methodically as a true system's architect would. Given your EC2 instance isn’t showing as a managed node in Systems Manager, let's walk through the folllowing checks to ensure proper node registration.
 
 1️Confirm the SSM agent is installed, running, and up to date on the instance
