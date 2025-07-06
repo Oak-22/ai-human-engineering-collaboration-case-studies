@@ -147,12 +147,19 @@ In this case, I strategically reset the diagnostic trajectory by requesting the 
 "That's a great idea! Let's approach this methodically as a true system's architect would. Given your EC2 instance isn’t showing as a managed node in Systems Manager, let's walk through the folllowing checks to ensure proper node registration.
 
 1️. Confirm the SSM agent is installed, running, and up to date on the instance
+
 2️. Double-check the attached IAM role includes AmazonSSMManagedInstanceCore
+
 3️. Verify your VPC interface endpoints (ssm, ssmmessages, ec2messages) are active and reachable
+
 4️. Ensure DNS resolution is enabled for the VPC and endpoint traffic
+
 5️. Review route tables to confirm correct routing to VPC endpoints
+
 6️. Inspect your instance’s security group rules, especially for both outbound and inbound rules.
+
 7 . Check for overly restrictive NACLs (network ACLs) that could block traffic
+
 8️. Review CloudWatch logs or system logs for SSM agent errors"
 
 Once you've confirmed each item, I'll help you troubleshoot what's left step by step — we'll get this sorted."
