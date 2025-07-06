@@ -48,6 +48,7 @@ As part of my diagnostic workflow, I involved GPT-4o to help interpret the faile
 
 **Command Sent:**
 
+```bash
 aws ssm send-command \
   --document-name "AWS-RunShellScript" \
   --targets "Key=tag:Name,Values=bedrock-ec2" \
@@ -56,6 +57,7 @@ aws ssm send-command \
 
 **The command returned a valid CommandId, but when querying invocation details:**
 
+```bash
 aws ssm list-command-invocations \
   --command-id 19df72ff-436f-4385-b8a7-52a35c5b2bde \
   --details \
@@ -64,6 +66,7 @@ aws ssm list-command-invocations \
 
 **Returned Response:**
 
+```json
 {
   "CommandInvocations": []
 }
