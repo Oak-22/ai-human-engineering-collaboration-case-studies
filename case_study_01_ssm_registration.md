@@ -71,29 +71,29 @@ Returned Response:
 
 LLM Interpretation (Incorrect Diagnostic):
 
-The model generated a plausible-sounding but incorrect conclusion as quoted below:
+The model proceeded to generate a plausible-sounding but incorrect conclusion as quoted below:
 
-"|🔍 Meaning:
-|	•	The command was successfully created
-|	•	But no instance ever picked it up
-|	•	This confirms: your EC2 instance is still not registered as a managed SSM node
-|
-|
-|🚨 Final Confirmation
-|
-|All signs now point to one root issue:
-|
-|🔒 The SSM agent on your instance never successfully registered with Systems Manager, despite:
-|
-|	•	IAM role being correctly attached
-|	•	SSM VPC endpoints being created
-|	•	Quick Setup succeeding
-|
-|
-|This could be due to:
-|	•	A corrupted or unresponsive SSM agent
-|	•	OS or AMI-level config drift
-|	•	Timing issues during role attachment + boot"
+".... Meaning:
+	•	The command was successfully created
+	•	But no instance ever picked it up
+	•	This confirms: your EC2 instance is still not registered as a managed SSM node
+
+
+Final Confirmation
+
+All signs now point to one root issue:
+
+The SSM agent on your instance never successfully registered with Systems Manager, despite:
+
+   •	IAM role being correctly attached
+	•	SSM VPC endpoints being created
+	•	Quick Setup succeeding
+
+
+This could be due to:
+	•	A corrupted or unresponsive SSM agent
+	•	OS or AMI-level config drift
+	•	Timing issues during role attachment + boot"
 
 
 ---
@@ -125,14 +125,14 @@ The LLM exhibited a behavior that I have observed frequently. One subtle wrong t
 
 "That's a great idea! Let's approach this methodically as a true system's architect would. Given your EC2 instance isn’t showing as a managed node in Systems Manager, let's walk through the folllowing checks to ensure proper node registration.
 
-|1️⃣ Confirm the SSM agent is installed, running, and up to date on the instance
-|2️⃣ Double-check the attached IAM role includes AmazonSSMManagedInstanceCore
-|3️⃣ Verify your VPC interface endpoints (ssm, ssmmessages, ec2messages) are active and reachable
-|4️⃣ Ensure DNS resolution is enabled for the VPC and endpoint traffic
-|5️⃣ Review route tables to confirm correct routing to VPC endpoints
-|6️⃣ Inspect your instance’s security group rules, especially for both outbound and inbound rules.
-|7️⃣ Check for overly restrictive NACLs (network ACLs) that could block traffic
-|8️⃣ Review CloudWatch logs or system logs for SSM agent errors"
+1️Confirm the SSM agent is installed, running, and up to date on the instance
+2️Double-check the attached IAM role includes AmazonSSMManagedInstanceCore
+3️Verify your VPC interface endpoints (ssm, ssmmessages, ec2messages) are active and reachable
+4️Ensure DNS resolution is enabled for the VPC and endpoint traffic
+5️Review route tables to confirm correct routing to VPC endpoints
+6️Inspect your instance’s security group rules, especially for both outbound and inbound rules.
+7 Check for overly restrictive NACLs (network ACLs) that could block traffic
+8️Review CloudWatch logs or system logs for SSM agent errors"
 
 Once you've confirmed each item, I'll help you troubleshoot what's left step by step — we'll get this sorted."
 
