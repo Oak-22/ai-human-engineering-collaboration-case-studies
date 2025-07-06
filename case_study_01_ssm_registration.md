@@ -117,7 +117,7 @@ This oversight reinforced the incorrect assumption that the problem originated w
 
 ## AI-Human Collaboration Pivot: Rewinding the Problem Space to a Known-Good State
 
-The LLM exhibited a familiar diagnostic flaw I’ve seen repeatedly. Once a subtle misstep occurs in the reasoning process (often unnoticed by the user), the model tends to recursively tunnel deeper along that incorrect path. With each additional prompt in the same chat session, the model compounds its framing bias, drifting further from the root issue.
+The LLM exhibited a familiar diagnostic flaw I’ve seen repeatedly. <u>*Once a subtle misstep occurs in the reasoning process (often unnoticed by the user), the model tends to recursively tunnel deeper along that incorrect path. With each additional prompt in the same chat session, the model compounds its framing bias, drifting further from the root issue.*</u>
 
 As the conversation lengthens and token limits are approached, essential technical context is degraded or forgotten altogether. At this stage, users must intervene to effectively "rewind" the LLM's problem space to a stable, known-good state. This is comparable to restoring a database from a snapshot or replaying a write-ahead log (WAL) to recover from corruption. Unlike databases, LLMs don’t persist conversational checkpoints inherently so this reset relies on human intervention, often with nuance. 
 
