@@ -16,27 +16,27 @@ My EC2 instance bedrock-ec2, intentionally deployed with no public IP and no exp
 ## Investigative Steps
 
 1. Verified IAM role trust relationship and attached policies:
-   - `AmazonSSMManagedInstanceCore`
-   - `AmazonSSMPatchAssociation`
-   - `AmazonSSMManagedEC2InstanceDefaultPolicy`
+   • `AmazonSSMManagedInstanceCore`
+   • `AmazonSSMPatchAssociation`
+   • `AmazonSSMManagedEC2InstanceDefaultPolicy`
 
 2. Confirmed the EC2 instance used a modern AMI with a preinstalled and enabled SSM agent.
 
 3. Validated VPC Interface Endpoints:
-   - `com.amazonaws.us-east-1.ssm`
-   - `com.amazonaws.us-east-1.ec2messages`
-   - `com.amazonaws.us-east-1.ssmmessages`
+   • `com.amazonaws.us-east-1.ssm`
+   • `com.amazonaws.us-east-1.ec2messages`
+   • `com.amazonaws.us-east-1.ssmmessages`
 
 4. Verified that both the EC2 instance and the interface endpoints used the same security group (`bedrock-privatelink-sg`), which allowed outbound HTTPS (TCP 443).
 
 5. Checked Route Table and DNS Validation:
-   - Confirmed route table was set to “main” and included standard routes.
-   - DNS resolutional functional. 
+   • Confirmed route table was set to “main” and included standard routes.
+   • DNS resolutional functional. 
 
 6. Performed several attempts to trigger registration:
-   - Rebooted the instance
-   - Issued `ssm:SendCommand` to restart the agent
-   - Pulled and analyzed instance logs
+   • Rebooted the instance
+   • Issued `ssm:SendCommand` to restart the agent
+   • Pulled and analyzed instance logs
 
      But the instance still failed to register with Systems Manager...
      
@@ -97,7 +97,7 @@ All signs now point to one root issue:
 
 The SSM agent on your instance never successfully registered with Systems Manager, despite:
 
-   •	IAM role being correctly attached
+   	•	IAM role being correctly attached
 	•	SSM VPC endpoints being created
 	•	Quick Setup succeeding
 
@@ -115,9 +115,9 @@ This could be due to:
 
 GPT-4o’s analysis hyper-focused on internal instance health, such as SSM agent corruption/failure to boot, AMI misconfiguration, or role timing conflicts. This framing bias neglected deeper network-layer constraints, despite the clear architectural constraints:
 
-No public IP
-No SSH access
-Sole reliance on VPC endpoints and private networking
+• No public IP
+• No SSH access
+• Sole reliance on VPC endpoints and private networking
 
 This oversight reinforced the incorrect assumption that the problem originated within the instance itself, rather than in its surrounding network configuration.
 
@@ -146,14 +146,14 @@ In this case, I strategically reset the diagnostic trajectory by requesting the 
 **LLM Response:**
 "That's a great idea! Let's approach this methodically as a true system's architect would. Given your EC2 instance isn’t showing as a managed node in Systems Manager, let's walk through the folllowing checks to ensure proper node registration.
 
-1️Confirm the SSM agent is installed, running, and up to date on the instance
-2️Double-check the attached IAM role includes AmazonSSMManagedInstanceCore
-3️Verify your VPC interface endpoints (ssm, ssmmessages, ec2messages) are active and reachable
-4️Ensure DNS resolution is enabled for the VPC and endpoint traffic
-5️Review route tables to confirm correct routing to VPC endpoints
-6️Inspect your instance’s security group rules, especially for both outbound and inbound rules.
-7 Check for overly restrictive NACLs (network ACLs) that could block traffic
-8️Review CloudWatch logs or system logs for SSM agent errors"
+1️. Confirm the SSM agent is installed, running, and up to date on the instance
+2️. Double-check the attached IAM role includes AmazonSSMManagedInstanceCore
+3️. Verify your VPC interface endpoints (ssm, ssmmessages, ec2messages) are active and reachable
+4️. Ensure DNS resolution is enabled for the VPC and endpoint traffic
+5️. Review route tables to confirm correct routing to VPC endpoints
+6️. Inspect your instance’s security group rules, especially for both outbound and inbound rules.
+7 . Check for overly restrictive NACLs (network ACLs) that could block traffic
+8️. Review CloudWatch logs or system logs for SSM agent errors"
 
 Once you've confirmed each item, I'll help you troubleshoot what's left step by step — we'll get this sorted."
 
