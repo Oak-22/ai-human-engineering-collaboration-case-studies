@@ -46,7 +46,7 @@ My EC2 instance bedrock-ec2, intentionally deployed with no public IP and no exp
 
 As part of my diagnostic workflow, I involved GPT-4o to help interpret the failed ssm:SendCommand behavior:
 
-Command Sent:
+**Command Sent:**
 
 aws ssm send-command \
   --document-name "AWS-RunShellScript" \
@@ -54,7 +54,7 @@ aws ssm send-command \
   --parameters 'commands=["sudo systemctl restart amazon-ssm-agent"]' \
   --region us-east-1
 
-The command returned a valid CommandId, but when querying invocation details:
+**The command returned a valid CommandId, but when querying invocation details:**
 
 aws ssm list-command-invocations \
   --command-id 19df72ff-436f-4385-b8a7-52a35c5b2bde \
@@ -62,7 +62,7 @@ aws ssm list-command-invocations \
   --region us-east-1
 
 
-Returned Response:
+**Returned Response:**
 
 {
   "CommandInvocations": []
@@ -70,7 +70,7 @@ Returned Response:
 
 
 
-LLM Interpretation (Incorrect Diagnostic):
+**LLM Interpretation (Incorrect Diagnostic):**
 
 
 The model proceeded to generate a plausible-sounding but incorrect conclusion as quoted below:
