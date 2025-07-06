@@ -1,12 +1,12 @@
-# Case Study 01: EC2 Fails to Register with AWS Systems Manager in a Private VPC
+# Case Study 01: EC2 Fails to Register with AWS Systems Manager in a Private VPC (AWS)
 
-**Summary:**  
-This case study documents troubleshooting a Systems Manager (SSM) registration failure for an EC2 instance deployed inside a Private VPC, designed to support ultra-secure, network-minimized Amazon Bedrock inference workloads. By design, the instance had no public IP and no exposed SSH ports, relying entirely on SSM for remote management and diagnostics. Despite correct IAM role attachment and VPC endpoint configuration, the instance failed to register with SSM due to a missing self-referencing inbound rule in its security group, which silently blocked traffic required for SSM agent functionality.
+##Summary
+This case study server as a clear, easy-to-follow example and demonstration of AI-Human collaboration on system design and network debugging, highlighting its strengths and weak points, as well as shows my general understanding of cloud architecture. In this case, I troubleshoot a Systems Manager (SSM) registration failure for an EC2 instance deployed inside a Private VPC, designed to support ultra-secure, network-minimized Amazon Bedrock inference workloads on AWS. By design, the instance had no public IP and no exposed SSH ports, relying entirely on SSM for remote management and diagnostics. Despite correct IAM role attachment and VPC endpoint configuration, the instance failed to register with SSM due to a missing self-referencing inbound rule in its security group, which silently blocked traffic required for SSM agent functionality.
 
 ---
 
-**Author Note:**  
-This case highlights more than a technical misconfiguration — it reveals how large language models can exhibit contextual blind spots when diagnosing layered, security-conscious architectures. The LLM initially misprioritized the root cause, not due to a lack of computational reasoning, but due to a framing bias influenced by incomplete system constraints. Once I injected the correct networking documentation and clarified the intended zero-public-access Bedrock design, the model pivoted toward accurate root cause analysis. This reinforces the importance of human-led contextual correction when collaborating with AI on advanced infrastructure troubleshooting.
+## Author Note
+*** needs to be revised since I didn't actually inject updated aws doc** This case highlights more than a technical misconfiguration — it reveals how large language models can exhibit contextual blind spots when diagnosing layered, security-conscious architectures. The LLM initially misprioritized the root cause, not due to a lack of computational reasoning, but due to a framing bias influenced by incomplete system constraints. Once I injected the correct networking documentation and clarified the intended zero-public-access Bedrock design, the model pivoted toward accurate root cause analysis. This reinforces the importance of human-led contextual correction when collaborating with AI on advanced infrastructure troubleshooting.
 
 ---
 
@@ -44,7 +44,6 @@ My EC2 instance, bedrock-ec2, intentionally deployed with no public IP and no ex
 
      But the instance still failed to register with Systems Manager...
      
-
 ---
 
 ## LLM Misdiagnosis — Real Example of AI Framing Bias
@@ -106,8 +105,6 @@ The model generated a plausible-sounding but incorrect conclusion:
  
 ## Why This Interpretation Fell Short
 
-
-
 GPT-4o’s early analysis hyper-focused on internal instance health, such as SSM agent corruption/failure to boot, AMI misconfiguration, or role timing conflicts. This framing bias neglected deeper network-layer constraints, despite the clear architectural constraints:
 
 No public IP
@@ -121,7 +118,7 @@ This oversight reinforced the incorrect assumption that the problem originated w
 
 ## AI-Human Collaboration Pivot
 
-Despite the narrow initial focus, GPT-4o’s broader diagnostic checklist recommended auditing the EC2 instance’s security group configuration within the AWS Console as 1 of 8 checks.
+Despite the narrow initial focus, GPT-4o’s broader diagnostic checklist - after a few extra back-and-forth prompts - eventually recommended auditing the EC2 instance’s security group configuration within the AWS Console, listed as 1 of 8 recommended checks.
 
 
 **My prompt**
@@ -132,14 +129,16 @@ Despite the narrow initial focus, GPT-4o’s broader diagnostic checklist recomm
 
 "Given your EC2 instance isn’t showing as a managed node in Systems Manager, let's walk through the folllowing checks to ensure proper node registration".
 
-1️⃣ Confirm the SSM agent is installed, running, and up to date on the instance
-2️⃣ Double-check the attached IAM role includes AmazonSSMManagedInstanceCore
-3️⃣ Verify your VPC interface endpoints (ssm, ssmmessages, ec2messages) are active and reachable
-4️⃣ Ensure DNS resolution is enabled for the VPC and endpoint traffic
-5️⃣ Review route tables to confirm correct routing to VPC endpoints
-6️⃣ Inspect your instance’s security group rules, especially for self-referencing inbound rules
-7️⃣ Check for overly restrictive NACLs (network ACLs) that could block traffic
-8️⃣ Review CloudWatch logs or system logs for SSM agent errors"
+|1️⃣ Confirm the SSM agent is installed, running, and up to date on the instance
+|2️⃣ Double-check the attached IAM role includes AmazonSSMManagedInstanceCore
+|3️⃣ Verify your VPC interface endpoints (ssm, ssmmessages, ec2messages) are active and reachable
+|4️⃣ Ensure DNS resolution is enabled for the VPC and endpoint traffic
+|5️⃣ Review route tables to confirm correct routing to VPC endpoints
+|6️⃣ Inspect your instance’s security group rules, especially for both outbound and inbound rules.
+|7️⃣ Check for overly restrictive NACLs (network ACLs) that could block traffic
+|8️⃣ Review CloudWatch logs or system logs for SSM agent errors"
+
+Once you've confirmed each item, I'll help you troubleshoot what's left step by step — we'll get this sorted. 
 
 *Generated by GPT-4o on June 5, 2025*
 
@@ -148,7 +147,7 @@ Despite the narrow initial focus, GPT-4o’s broader diagnostic checklist recomm
 ## This output prompt became a key pivot point. ##
 
 
-Through iterative human-led questioning, I had produced a list of possible failpoints. I didn't recall configuring custom security group rules, so I inspected Bullet point 6 further. Upon doing so, I discovered that the security group lacked an inbound rule permitting TCP 443 traffic from itself — an often-overlooked prerequisite for VPC endpoint communication in isolated environments.
+Through iterative human-led questioning, I had produced a list of possible failpoints. After reading all options, I realized I had never checked nor configured custom security group rules, so I investigated bullet point 6 further. Upon doing so, I discovered that the security group lacked an inbound rule permitting TCP 443 traffic from itself. an often-overlooked prerequisite for VPC endpoint communication in isolated environments.
 
 
 ## Root Cause
