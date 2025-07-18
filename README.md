@@ -10,7 +10,7 @@ This repository contains 10 real-world case studies showcasing collaborative pro
 ## Purpose
 
 This repo is designed for:
-  - Engineers adopting LLMs as hands-on copilots.
+  - Engineers adopting LLMs as copilots.
   - Teams navigating Software Development, AI infrastructure, DevOps.  
   - Anyone documenting collaborative troubleshooting patterns
 
