@@ -16,7 +16,7 @@ This repo is designed for:
 
 ## Structure
 
-Case studies are stored in standalone Markdown files:
+Case studies are stored in Markdown files:
 
 1. case_study_01_ssm_registration.md
 2. case_study_02_.md
