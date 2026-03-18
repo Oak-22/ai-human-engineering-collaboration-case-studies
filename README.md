@@ -19,15 +19,6 @@ This repo is designed for:
 Case studies are stored in Markdown files:
 
 1. case_study_01_ssm_registration.md
-2. case_study_02_.md
-3. case_study_03_.md
-4. case_study_04_.md
-5. case_study_05_.md
-6. case_study_06_.md
-7. case_study_07_.md
-8. case_study_08_.md
-9. case_study_09_.md
-10. case_study_10_.md
 
 
 ## License
