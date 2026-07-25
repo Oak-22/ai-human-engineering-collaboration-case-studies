@@ -1,3 +1,10 @@
+> [!IMPORTANT]
+> **This standalone repository has been merged into the [Agentic Engineering Platform](https://github.com/Oak-22/agentic-engineering-platform) monorepo.**
+>
+> Active development now lives at [`evidence/human-ai-collaboration-case-studies`](https://github.com/Oak-22/agentic-engineering-platform/tree/main/evidence/human-ai-collaboration-case-studies). This repository is retained as a historical record; use the monorepo for current code, documentation, issues, and contributions.
+
+---
+
 # AI–Human Engineering Collaboration Case Studies
 
 This repository contains real-world case studies showcasing collaborative problem-solving between a human engineer and an AI assistant (LLM). Each entry documents a real software development challenge, including:
